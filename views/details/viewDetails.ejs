@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include ../partials/head.ejs %>
+</head>
+
+<body>
+
+    <!-- ======= Mobile nav toggle button ======= -->
+    <i class="bi bi-list mobile-nav-toggle d-xl-none"></i>
+
+    <!-- ======= Header ======= -->
+    <% include ../partials/sidebar.ejs %>
+    <!-- End Header -->
+
+    <!-- ======= Hero Section ======= -->
+    <!-- <section id="hero" class="d-flex flex-column justify-content-center align-items-center">
+        <div class="hero-container" data-aos="fade-in">
+            <h1>Rahmad Alfian</h1>
+            <p>I'm <span class="typed" data-typed-items="Back End Dev, Mobile App Dev, Front End Dev"></span></p>
+        </div>
+    </section> -->
+    <!-- End Hero -->
+
+    <main id="main">
+
+        <!-- ======= Breadcrumbs ======= -->
+        <section id="breadcrumbs" class="breadcrumbs">
+            <div class="container">
+
+                <div class="d-flex justify-content-between align-items-center">
+                    <h2>Portfolio Detail</h2>
+                    <ol>
+                        <li><a href="/">Home</a></li>
+                        <li>Portfolio Details</li>
+                    </ol>
+                </div>
+
+            </div>
+        </section><!-- End Breadcrumbs -->
+
+        <!-- ======= Portfolio Details Section ======= -->
+        <section id="portfolio-details" class="portfolio-details">
+            <div class="container">
+
+                <div class="row gy-4">
+
+                    <div class="col-lg-8">
+                        <div class="portfolio-details-slider swiper">
+                            <div class="swiper-wrapper align-items-center">
+                                <div class="swiper-slide">
+                                    <img src="images/<%= detail[0].images %>" alt="">
+                                </div>
+                                <% for (let i = 0; i < detailImages.length; i++) { %>
+                                <div class="swiper-slide">
+                                    <img src="images/<%= detailImages[i].images_url %>" alt="">
+                                </div>
+                                <% } %>
+                            </div>
+                            <div class="swiper-pagination"></div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="portfolio-info">
+                            <h3>Works Detail</h3>
+                            <ul>
+                                <li><strong>Category</strong>: <%= detail[0].category_name %> </li>
+                                <li><strong>Client</strong>: <%= detail[0].client %></li>
+                                <li><strong>Project date</strong>: <%= detail[0].works_date %></li>
+                                <li><strong>Project URL</strong>:
+                                    <a href="<%= detail[0].works_url %>"><%= detail[0].works_url %></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="portfolio-description">
+                    <h2><%= detail[0].works_name %></h2>
+                    <p>
+                        <%= detail[0].works_desc %>
+                    </p>
+                </div>
+
+            </div>
+        </section><!-- End Portfolio Details Section -->
+
+    </main><!-- End #main -->
+
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+            class="bi bi-arrow-up-short"></i></a>
+
+    <% include ../partials/js.ejs %>
+
+
+</body>
+
+</html>

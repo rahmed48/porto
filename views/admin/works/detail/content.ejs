@@ -1,0 +1,148 @@
+<div class="row">
+    <div class="col-12 col-md-12 col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <form action="/admin/editDetail" method="POST" enctype="multipart/form-data">
+                    <input type="hidden" name="works_id" value="<%= detail[0].works_id %>">
+                    <div class="form-group">
+                        <label for="works_name">Works Name</label>
+                        <input type="text" class="form-control" id="works_name" name="works_name"
+                            placeholder="Enter works name" value="<%= detail[0].works_name %>">
+                    </div>
+                    <div class="form-group">
+                        <label for="category">Category</label>
+                        <select class="form-control" id="category" name="category">
+                            <% for(let i = 0; i < category.length; i++) { %>
+                            <option value="<%= category[i].category_id %>"
+                                <% if(category[i].category_id == detail[0].category) { %> selected <% } %>>
+                                <%= category[i].category_name %></option>
+                            <% } %>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="works_date">Works Date</label>
+                        <input type="date" class="form-control datepicker" id="works_date" name="works_date"
+                            placeholder="Enter works date" value="<%= detail[0].works_date %>">
+                        <!-- date.getFullYear() * 1e4 + (date.getMonth() + 1) * 100 + date.getDate() + ''; -->
+                    </div>
+                    <div class="form-group">
+                        <label for="client">Client</label>
+                        <input type="text" class="form-control" id="client" name="client" placeholder="Enter client"
+                            value="<%= detail[0].client %>">
+                    </div>
+                    <div class="form-group">
+                        <label for="client">Works Url</label>
+                        <input type="text" class="form-control" id="url" name="url" placeholder="Enter Url"
+                            value="<%= detail[0].works_url %>">
+                    </div>
+                    <div class="form-group">
+                        <label for="client">Desc</label>
+                        <textarea class="form-control" id="desc" name="desc"
+                            rows="3"><%= detail[0].works_desc %></textarea>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 col-lg-8 col-sm-12">
+                            <div class="form-group">
+                                <label for="image">Display Images</label>
+                                <input type="file" class="form-control" id="image" name="image">
+                                <span style="font-size: 12px ; color: red; margin-left: 15px;">Pilih Gambar Untuk
+                                    Mengganti</span>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-lg-4 col-sm-12">
+                            <img src="/images/<%= detail[0].images %>" alt="" class="img-fluid">
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+                <br>
+                <br>
+                <hr>
+                <br>
+                <br>
+                <div>
+                    <form action="/admin/detailImages" method="POST" enctype="multipart/form-data" id="formDetail">
+                        <label id="label-upload-detail" for="image-detail" class="btn btn-primary">Tambah Gambar
+                            Detail</label>
+                        <input id="image-detail" type="file" class="d-none" name="image" />
+                        <input name="worksID" id="worksID" type="hidden" value="<%= detail[0].works_id %>" />
+                        &nbsp;&nbsp;&nbsp;
+                        <button id="button-upload-detail" type="submit" class="btn btn-primary d-none"
+                            style="margin-bottom:8px;">Upload</button>
+                    </form>
+                    <div id="detail-images" class="row col-12">
+                        <% for(let i = 0; i < detailImages.length; i++) { %>
+                        <div id="list-detail-images" style="margin: 10px ;">
+                            <div class="row" style="margin-left: 10px;">
+                                <h5>Gambar <%= i+1 %> </h5>
+                                <!-- <i class=" fas fa-trash-alt" style="margin-left: 30px; cursor: pointer;"
+                                    onclick="deleteDetailImage('<#%= detailImages[i].images_url %>', '<#%= detailImages[i].detail_id %>')"> -->
+                                </i>
+                            </div>
+                            <img src="/images/<%= detailImages[i].images_url %>" alt="" width="270px">
+                        </div>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $('#image-detail').change(function () {
+            var i = $(this).prev('label').clone();
+            var file = $('#image-detail')[0].files[0].name;
+
+            $('#label-upload-detail').text(file);
+            $('#button-upload-detail').removeClass('d-none');
+
+            // $(this).prev('label').text(file).parent().children('button').removeClass('d-none')
+
+        });
+    </script>
+    <script>
+        $("form#formDetail").submit(function (e) {
+            e.preventDefault();
+            var formData = new FormData(this);
+            $('#button-upload-detail').addClass('d-none');
+            $('#label-upload-detail').text('Tambah Gambar Detail');
+            $.ajax({
+                type: 'POST',
+                url: `/admin/detailImages`,
+                dataType: 'html',
+                data: formData,
+                success: function (kirim) {
+                    // console.log(kirim);
+                    $('#detail-images').html(kirim);
+                },
+                error: function (eror) {
+                    console.log('eror post :', eror);
+                },
+                cache: false,
+                contentType: false,
+                processData: false,
+            });
+        })
+    </script>
+
+    <!-- <script>
+        function deleteDetailImage(url, id) {
+            $.ajax({
+                type: 'DELETE',
+                url: `/admin/detail/${url}/${id}`,
+                dataType: 'html',
+                success: function (kirim) {
+                    // console.log(kirim);
+                    $('#detail-images').html(kirim);
+                },
+                error: function (eror) {
+                    console.log('eror post :', eror);
+                },
+                cache: false,
+                contentType: false,
+                processData: false,
+            });
+        }
+    </script> -->

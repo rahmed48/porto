@@ -1,0 +1,39 @@
+  <!-- Vendor JS Files -->
+  <script src="fe/vendor/purecounter/purecounter.js"></script>
+  <script src="fe/vendor/aos/aos.js"></script>
+  <script src="fe/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="fe/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="fe/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="fe/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="fe/vendor/typed.js/typed.min.js"></script>
+  <script src="fe/vendor/waypoints/noframework.waypoints.js"></script>
+  <script src="fe/vendor/php-email-form/validate.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="fe/js/main.js"></script>
+
+  <!-- <script>
+    function resize() {
+      if ($(window).width() < 1200) {
+        $('#hero-div').removeClass('hero-container').addClass('hero-container-mobile');
+        console.log('mobile');
+      }
+    }
+
+    $(window).on('resize', function () {
+      resize();
+    });
+  </script> -->
+
+  <script>
+    if (window.innerWidth >= 1200) {
+      console.log('desktop');
+      document.querySelector("#hero-div").classList.add('hero-container-desktop');
+    } else if (window.innerWidth <= 1200 && window.innerWidth >= 768) {
+      console.log('tablet');
+      document.querySelector("#hero-div").classList.add('hero-container-tablet');
+    } else {
+      console.log('mobile');
+      document.querySelector("#hero-div").classList.add('hero-container-mobile');
+    }
+  </script>

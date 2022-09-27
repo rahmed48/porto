@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<% include ../../partials/head.ejs %>
+<style>
+  /* Create a custom checkbox */
+  .checkmark {
+    height: 25px;
+    width: 25px;
+    background-color: #eee;
+  }
+</style>
+
+<!-- <body class="sidebar-mini"> -->
+
+<body>
+  <div id="app">
+    <div class="main-wrapper">
+      <div class="navbar-bg"></div>
+      <% include ../../partials/navbar.ejs %>
+      <% include ../../partials/sidebar.ejs %>
+
+
+      <!-- Main Content -->
+      <div class="main-content">
+        <section class="section">
+          <div class="section-header">
+            <h1><%= title  %></h1>
+          </div>
+          <% include ./content.ejs %>
+          <div class="section-body">
+          </div>
+        </section>
+      </div>
+      <% include ../../partials/footer.ejs %>
+    </div>
+  </div>
+  <% include ../../partials/js.ejs %>
+</body>
+
+</html>

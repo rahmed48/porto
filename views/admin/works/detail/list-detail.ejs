@@ -1,0 +1,13 @@
+<div id="detail-images" class="row col-12">
+    <% for(let i = 0; i < detailImages.length; i++) { %>
+    <div id="list-detail-images" style="margin: 10px ;">
+        <div class="row" style="margin-left: 10px;">
+            <h5>Gambar <%= i+1 %> </h5>
+            <!-- <i class=" fas fa-trash-alt" style="margin-left: 30px; cursor: pointer;"
+                onclick="deleteDetailImage('<#%= detailImages[i].images_url %>', '<#%= detailImages[i].detail_id %>')"> -->
+            </i>
+        </div>
+        <img src="/images/<%= detailImages[i].images_url %>" alt="" width="270px">
+    </div>
+    <% } %>
+</div>

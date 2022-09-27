@@ -1,0 +1,56 @@
+<div class="row">
+    <div class="col-12 col-md-12 col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <button class="btn btn-primary" id="add-works" data-toggle="modal" data-target="#add-works-modal">Add Works
+                    &nbsp;
+                    <i class="fas fa-plus"></i>
+                </button>
+            </div>
+            <div class="card-body">
+                <div table-responsive>
+                    <table class="table table-striped" id="table1">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Works Name</th>
+                                <th>Category</th>
+                                <th>Works Date</th>
+                                <th>Client</th>
+                                <th>Images</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% for(let i = 0; i < works.length; i++) { %>
+                            <tr>
+                                <td><%= i+1 %></td>
+                                <td><%= works[i].works_name %></td>
+                                <td><%= works[i].category_name %></td>
+                                <td><%= works[i].works_date %></td>
+                                <td><%= works[i].client %></td>
+                                <td><img src="/images/<%= works[i].images %>" alt="" width="200px"></td>
+                                <td>
+                                    <div class="row">
+                                        <a href="/admin/works/<%= works[i].works_id %>/edit" data-toggle="tooltip"
+                                            data-placement="left" title="Edit & Detail"
+                                            class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></a>
+                                        &nbsp;
+                                        <form action="/admin/works/<%= works[i].works_id %>" method="POST"
+                                            class="d-inline">
+                                            <input type="hidden" name="_method" value="DELETE">
+                                            <button type="submit" class="btn btn-danger btn-sm" data-toggle="tooltip"
+                                                data-placement="left" title="Delete"><i
+                                                    class="fas fa-trash"></i></button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                            <% } %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,47 @@
+<div class="main-sidebar sidebar-style-2">
+    <aside id="sidebar-wrapper">
+        <div class="sidebar-brand">
+            <a href="/admin/works">RAHMED48</a>
+        </div>
+        <div class="sidebar-brand sidebar-brand-sm">
+            <a href="/admin/works">48</a>
+        </div>
+        <ul class="sidebar-menu" id="menus">
+            <!-- <li class="menu-header">Dashboard</li> -->
+            <!-- <li class="nav-item dropdown">
+                <a href="#" class="nav-link has-dropdown"><i class="fas fa-fire"></i><span>Dashboard</span></a>
+                <ul class="dropdown-menu">
+                    <li><a class="nav-link" href="index-0.html">General Dashboard</a></li>
+                    <li><a class="nav-link" href="/admin/works">Ecommerce Dashboard</a></li>
+                </ul>
+            </li> -->
+            <li>
+                <a class="nav-link" href="/admin/works">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>Works</span>
+                </a>
+            </li>
+            <!-- <li>
+                <a class="nav-link" href="/admin/proses">
+                    <i class="fas fa-tasks"></i>
+                    <span>Proses Surat</span>
+                </a>
+            </li>
+            <li>
+                <a class="nav-link" href="/admin/form">
+                    <i class="fas fa-edit"></i>
+                    <span>Form Surat</span>
+                </a>
+            </li> -->
+        </ul>
+    </aside>
+</div>
+
+<script>
+    $(function () {
+        let url = window.location;
+        let element = $('#menus li').children().filter(function () {
+            return this.href == url
+        }).parent().addClass("active")
+    });
+</script>
