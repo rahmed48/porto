@@ -8,14 +8,6 @@ const fs = require("fs-extra");
 const path = require("path");
 
 module.exports = {
-  admin: async (req, res, next) => {
-    try {
-      res.redirect(`admin/signin`);
-    } catch (error) {
-      console.log(error);
-    }
-  },
-
   viewSignin: async (req, res) => {
     try {
       // console.log(req.session);
@@ -31,11 +23,11 @@ module.exports = {
           title: "Signin",
         });
       } else {
-        res.redirect(`admin/signin`);
+        res.redirect(`/admin/signin`);
       }
     } catch (error) {
       console.log("erornya :", error);
-      // res.redirect(`/admin/admin/signin`);
+      res.redirect(`/admin/signin`);
     }
   },
 
@@ -60,7 +52,7 @@ module.exports = {
             nama: user[0].nama_user,
             level: user[0].level,
           };
-          res.redirect(`/admin/works`);
+          res.redirect(`/admin/profile`);
         }
       } else {
         req.flash("alertMessage", "User yang anda masukan tidak ada!!");
@@ -110,6 +102,7 @@ module.exports = {
       });
     } catch (error) {
       console.log("erornya :", error);
+      res.redirect(`/admin/signin`);
     }
   },
 
@@ -125,6 +118,7 @@ module.exports = {
       res.redirect(`/admin/works`);
     } catch (error) {
       console.log("erornya :", error);
+      res.redirect(`/admin/signin`);
     }
   },
 
@@ -145,7 +139,6 @@ module.exports = {
       const category = await sequelize.query(`SELECT * FROM category`, {
         type: QueryTypes.SELECT,
       });
-      console.log(detail);
       res.render("admin/works/detail/base", {
         title: "Detail Works",
         users: req.session.user,
@@ -155,6 +148,7 @@ module.exports = {
       });
     } catch (error) {
       console.log("erornya :", error);
+      res.redirect(`/admin/signin`);
     }
   },
 
@@ -169,14 +163,13 @@ module.exports = {
       res.redirect(`/admin/works`);
     } catch (error) {
       console.log("erornya :", error);
+      res.redirect(`/admin/signin`);
     }
   },
 
   postDetailImages: async (req, res) => {
     try {
       const { worksID } = req.body;
-      console.log(worksID);
-      console.log(req.file.filename);
 
       await sequelize.query(
         `INSERT INTO works_detail_images (works_id, images_url) VALUES ('${worksID}', '${req.file.filename}')`,
@@ -206,8 +199,47 @@ module.exports = {
       });
     } catch (error) {
       console.log("erornya :", error);
+      res.redirect(`/admin/signin`);
     }
   },
+
+  deleteDetailImages: async (req, res) => {
+    try {
+      const { works, id } = req.params;
+      const detailGambarnya = await sequelize.query(
+        `SELECT * FROM works_detail_images WHERE detail_id = ${id}`,
+        { type: QueryTypes.SELECT }
+      );
+      const images = detailGambarnya[0].images_url;
+      await sequelize.query(
+        `DELETE FROM works_detail_images WHERE detail_id = ${id}`,
+        { type: QueryTypes.DELETE }
+      );
+      fs.unlinkSync(path.join(__dirname, `../public/images/${images}`));
+      // fs.unlink(path.join(`../images/${images}`));
+
+      const detailImages = await sequelize.query(
+        `SELECT * FROM works_detail_images WHERE works_id = ${works}`,
+        { type: QueryTypes.SELECT }
+      );
+      const detail = await sequelize.query(
+        `SELECT * FROM works WHERE works_id = ${works}`,
+        {
+          type: QueryTypes.SELECT,
+        }
+      );
+      res.render("admin/works/detail/list-detail", {
+        title: "Detail Works",
+        users: req.session.user,
+        detail,
+        detailImages,
+      });
+      res.redirect(`/admin/works/${works}`);
+    } catch (error) {
+      console.log("erornya :", error);
+    }
+  },
+
   editDetail: async (req, res) => {
     try {
       const { works_id, works_name, category, works_date, client, url, desc } =
@@ -239,26 +271,89 @@ module.exports = {
       res.redirect(`/admin/works`);
     } catch (error) {
       console.log("erornya :", error);
+      res.redirect(`/admin/signin`);
     }
   },
-  // deleteDetailImages: async (req, res) => {
-  //   try {
-  //     const { worksID } = req.body;
-  //     const detailImages = await sequelize.query(
-  //       `SELECT * FROM works_detail_images WHERE works_id = ${worksID}`,
-  //       { type: QueryTypes.SELECT }
-  //     );
-  //     const images = detailImages[0].images_url;
-  //     await sequelize.query(
-  //       `DELETE FROM works_detail_images WHERE works_id = '${req.params.id}'`,
-  //       { type: QueryTypes.DELETE }
-  //     );
-  //     fs.unlink(path.join(`public/uploads/${images}`));
-  //     res.redirect(`/admin/works/${worksID}`);
-  //   } catch (error) {
-  //     console.log("erornya :", error);
-  //   }
-  // },
+
+  viewProfile: async (req, res) => {
+    try {
+      const profile = await sequelize.query(`SELECT * FROM profile`, {
+        type: QueryTypes.SELECT,
+      });
+      res.render("admin/profile/base", {
+        title: "Profile",
+        users: req.session.user,
+        profile,
+      });
+    } catch (error) {
+      console.log("erornya :", error);
+      res.redirect(`/admin/signin`);
+    }
+  },
+  editProfile: async (req, res) => {
+    try {
+      const {
+        name,
+        birthday,
+        email,
+        phone,
+        city,
+        about,
+        hobies,
+        twitter,
+        facebook,
+        instagram,
+        linkedin,
+        github,
+      } = req.body;
+      await sequelize.query(
+        `UPDATE profile SET name = "${name}", birthday = "${birthday}", email = "${email}", phone = "${phone}", city = "${city}", about = "${about}", hobies = "${hobies}", twitter = "${twitter}", facebook="${facebook}", instagram = "${instagram}", linkedin = "${linkedin}", github = "${github}"`,
+        {
+          type: QueryTypes.UPDATE,
+        }
+      );
+      if (req.files.resume !== undefined) {
+        await sequelize.query(
+          `UPDATE profile SET resume_file = "${req.files.resume[0].filename}"`,
+          {
+            type: QueryTypes.UPDATE,
+          }
+        );
+      }
+      if (req.files.profileimg !== undefined) {
+        await sequelize.query(
+          `UPDATE profile SET profile_images = "${req.files.profileimg[0].filename}"`,
+          {
+            type: QueryTypes.UPDATE,
+          }
+        );
+      }
+      if (req.files.aboutimg !== undefined) {
+        await sequelize.query(
+          `UPDATE profile SET about_images = "${req.files.aboutimg[0].filename}"`,
+          {
+            type: QueryTypes.UPDATE,
+          }
+        );
+      }
+      res.redirect(`/admin/profile`);
+    } catch (error) {
+      console.log("erornya :", error);
+      res.redirect(`/admin/signin`);
+    }
+  },
+
+  viewResume: async (req, res) => {
+    try {
+      res.render("admin/resume/base", {
+        title: "Resume",
+        users: req.session.user,
+      });
+    } catch (error) {
+      console.log("erornya :", error);
+      res.redirect(`/admin/signin`);
+    }
+  },
 };
 
 //       res.redirect(`/admin/works/edit/${worksID}`);

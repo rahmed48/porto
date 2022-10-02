@@ -38,7 +38,7 @@
                     <div class="form-group">
                         <label for="client">Desc</label>
                         <textarea class="form-control" id="desc" name="desc"
-                            rows="3"><%= detail[0].works_desc %></textarea>
+                            style="height: 200px !important;"><%= detail[0].works_desc %></textarea>
                     </div>
                     <div class="row">
                         <div class="col-md-12 col-lg-8 col-sm-12">
@@ -77,8 +77,10 @@
                         <div id="list-detail-images" style="margin: 10px ;">
                             <div class="row" style="margin-left: 10px;">
                                 <h5>Gambar <%= i+1 %> </h5>
-                                <!-- <i class=" fas fa-trash-alt" style="margin-left: 30px; cursor: pointer;"
-                                    onclick="deleteDetailImage('<#%= detailImages[i].images_url %>', '<#%= detailImages[i].detail_id %>')"> -->
+                                <button id="delete-detail-images" type="button" class="btn btn-danger btn-sm"
+                                    style="margin-left: 20px; margin-bottom: 10px;"
+                                    onclick="deleteDetailImage('<%= detailImages[i].works_id %>', '<%= detailImages[i].detail_id %>')">
+                                    <i class=" fas fa-trash-alt"></i></button>
                                 </i>
                             </div>
                             <img src="/images/<%= detailImages[i].images_url %>" alt="" width="270px">
@@ -127,22 +129,18 @@
         })
     </script>
 
-    <!-- <script>
-        function deleteDetailImage(url, id) {
+    <script>
+        function deleteDetailImage(works, id) {
             $.ajax({
-                type: 'DELETE',
-                url: `/admin/detail/${url}/${id}`,
+                type: 'get',
+                url: `/admin/delete-detail-image/${works}/${id}`,
                 dataType: 'html',
                 success: function (kirim) {
-                    // console.log(kirim);
                     $('#detail-images').html(kirim);
                 },
                 error: function (eror) {
                     console.log('eror post :', eror);
                 },
-                cache: false,
-                contentType: false,
-                processData: false,
             });
         }
-    </script> -->
+    </script>

@@ -10,6 +10,9 @@ const path = require("path");
 module.exports = {
   viewIndex: async (req, res, next) => {
     try {
+      const profile = await sequelize.query("SELECT * FROM profile", {
+        type: QueryTypes.SELECT,
+      });
       const portfolio = await sequelize.query(
         `SELECT * FROM works w JOIN category c ON w.category=c.category_id ORDER BY works_id DESC`,
         {
@@ -19,10 +22,12 @@ module.exports = {
       const category = await sequelize.query(`SELECT * FROM category`, {
         type: QueryTypes.SELECT,
       });
+      console.log(profile);
       res.render("home/viewHome", {
         message: "success",
         portfolio,
         category,
+        profile,
       });
     } catch (error) {
       console.log(error);
@@ -32,6 +37,9 @@ module.exports = {
   viewDetail: async (req, res, next) => {
     try {
       const { id } = req.params;
+      const profile = await sequelize.query("SELECT * FROM profile", {
+        type: QueryTypes.SELECT,
+      });
       const detail = await sequelize.query(
         `SELECT * FROM works w JOIN category c ON w.category=c.category_id WHERE works_id = ${id}`,
         {
@@ -44,12 +52,12 @@ module.exports = {
           type: QueryTypes.SELECT,
         }
       );
-      console.log(detailImages);
-      console.log(detail);
+      console.log(profile);
       res.render("details/viewDetails", {
         message: "success",
         detail,
         detailImages,
+        profile,
       });
     } catch (error) {
       console.log(error);

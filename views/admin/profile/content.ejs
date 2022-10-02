@@ -1,0 +1,80 @@
+<div class="row">
+    <div class="col-12 col-md-12 col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <form action="/admin/profile" method="POST" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="name">Nama</label>
+                        <input type="text" class="form-control" id="name" name="name" value="<%= profile[0].name %>">
+                    </div>
+                    <div class="form-group">
+                        <label for="birthday">Birthday</label>
+                        <input type="text" class="form-control" id="birthday" name="birthday"
+                            value="<%= profile[0].birthday %>">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" class="form-control" id="email" name="email"
+                            value="<%= profile[0].email %>">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone</label>
+                        <input type="text" class="form-control" id="phone" name="phone" value="<%= profile[0].phone %>">
+                    </div>
+                    <div class="form-group">
+                        <label for="city">City</label>
+                        <input type="text" class="form-control" id="city" name="city" value="<%= profile[0].city %>">
+                    </div>
+                    <div class="form-group">
+                        <label for="twitter">Twitter</label>
+                        <input type="text" class="form-control" id="twitter" name="twitter"
+                            value="<%= profile[0].twitter %>">
+                    </div>
+                    <div class="form-group">
+                        <label for="facebook">Facebook</label>
+                        <input type="text" class="form-control" id="facebook" name="facebook"
+                            value="<%= profile[0].facebook %>">
+                    </div>
+                    <div class="form-group">
+                        <label for="instagram">Instagram</label>
+                        <input type="text" class="form-control" id="instagram" name="instagram"
+                            value="<%= profile[0].instagram %>">
+                    </div>
+                    <div class="form-group">
+                        <label for="linkedin">Linkedin</label>
+                        <input type="text" class="form-control" id="linkedin" name="linkedin"
+                            value="<%= profile[0].linkedin %>">
+                    </div>
+                    <div class="form-group">
+                        <label for="github">Github</label>
+                        <input type="text" class="form-control" id="github" name="github"
+                            value="<%= profile[0].github %>">
+                    </div>
+                    <div class="form-group">
+                        <label for="about">About</label>
+                        <textarea class="form-control" id="about" name="about"
+                            style="height: 200px !important;"><%= profile[0].about %></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="hobies">Hobies</label>
+                        <textarea class="form-control" id="hobies" name="hobies"
+                            style="height: 150px !important;"><%= profile[0].hobies %></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="resume">Resume</label>
+                        <input type="file" class="form-control" id="resume" name="resume">
+                    </div>
+                    <div class="form-group">
+                        <label for="profile-image">Profile Images</label>
+                        <input type="file" class="form-control" id="profile-image" name="profileimg">
+                    </div>
+                    <div class="form-group">
+                        <label for="about-image">About Images</label>
+                        <input type="file" class="form-control" id="about-image" name="aboutimg">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

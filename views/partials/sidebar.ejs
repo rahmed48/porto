@@ -3,19 +3,17 @@
           <div class="d-flex flex-column">
 
                   <div class="profile">
-                          <img src="fe/img/foto2.jpg" alt="" class="img-fluid rounded-circle">
-                          <h1 class="text-light"><a href="index.html">Rahmad Alfian<br>Syahputra</a></h1>
+                          <img src="resume/<%= profile[0].profile_images %>" alt="" class="img-fluid rounded-circle">
+                          <h1 class="text-light"><a href="index.html"><%= profile[0].name %></a></h1>
                           <div class="social-links mt-3 text-center">
-                                  <a href="https://twitter.com/Rahmed48_" class="twitter"><i
-                                                  class="bx bxl-twitter"></i></a>
-                                  <a href="https://web.facebook.com/RahmadAlfianS/" class="facebook"><i
+                                  <a href="<%= profile[0].twitter %>" class="twitter"><i class="bx bxl-twitter"></i></a>
+                                  <a href="<%= profile[0].facebook %>" class="facebook"><i
                                                   class="bx bxl-facebook"></i></a>
-                                  <a href="https://www.instagram.com/rahmed48_/" class="instagram"><i
+                                  <a href="<%= profile[0].instagram %>" class="instagram"><i
                                                   class="bx bxl-instagram"></i></a>
-                                  <a href="https://www.linkedin.com/in/rahmed48/" class="linkedin"><i
+                                  <a href="<%= profile[0].linkedin %>" class="linkedin"><i
                                                   class="bx bxl-linkedin"></i></a>
-                                  <a href="https://github.com/rahmed48" class="linkedin"><i
-                                                  class="bx bxl-github"></i></a>
+                                  <a href="<%= profile[0].github %>" class="github"><i class="bx bxl-github"></i></a>
                           </div>
                   </div>
 
